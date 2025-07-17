@@ -1,7 +1,0 @@
-solana.ts:122 Error sending tip: TypeError: tx.serialize is not a function
-    at async sendTip (solana.ts:111:23)
-    at async handleTip (page.tsx:68:7)
-
-page.tsx:73 TypeError: tx.serialize is not a function
-    at async sendTip (solana.ts:111:23)
-    at async handleTip (page.tsx:68:7)

@@ -1,0 +1,31 @@
+
+🌐 Front-End (Basic)
+A minimal front-end (can be hosted on GitHub Pages / Vercel / Netlify) that:
+● Connects wallet via Phantom (or any Solana-compatible wallet)
+● Shows the current balance of the Tip Jar
+● Has a button to Tip 0.01 SOL
+● If logged-in wallet is the owner, show a button to Withdraw funds
+You may use:
+● HTML + JavaScript (or)
+● React + Solana Wallet Adapter (minimal setup)
+🚀 Deliverables
+Submit the following:
+1. GitHub Repo link with:
+○ Rust smart contract (with Anchor)
+○ Front-end code
+2. Live Deployed URL of front-end (on GitHub Pages, Vercel, Netlify, etc.)
+3. A README that includes:
+○ Program ID (deployed address)
+○ How to test locally or on Devnet
+○ Any known issues or limitations
+🔧 Tech Stack Expectations
+● Solana Toolchain (Anchor CLI, Solana CLI)
+● Rust (Solana programs)
+● Basic familiarity with wallet adapters & web3.js
+● Optional brownie points: use of environment variables, clean UI, responsiveness
+🧠 What We'll Evaluate
+● Code quality & modularity
+● Understanding of Solana PDA concepts & lamport transfers
+● Ability to secure funds (ownership checks, devnet deployment)
+● Ability to wire up a working front-end
+● Developer experience: is it easy to follow and run?

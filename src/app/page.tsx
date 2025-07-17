@@ -16,6 +16,12 @@ const Home: FC = () => {
   const [loading, setLoading] = useState(false);
   const [withdrawing, setWithdrawing] = useState(false);
   const [phantomInstalled, setPhantomInstalled] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  
+  // Check if component is mounted on client side
+  useEffect(() => {
+    setMounted(true);
+  }, []);
   
   // Check if Phantom wallet is installed
   useEffect(() => {
@@ -54,24 +60,28 @@ const programId = new PublicKey(process.env.NEXT_PUBLIC_PROGRAM_ID as string);
         setIsOwner(false);
       }
     } catch (error) {
-      toast.error("Failed to fetch balance.");
+      toast.error("⚠️ Failed to fetch tip jar balance");
       console.error(error);
     }
   }, [publicKey, connection, programId, ownerPublicKey]);
 
   const handleTip = async () => {
     if (!publicKey) {
-      toast.error("Connect your wallet first.");
+      toast.error("🔒 Please connect your wallet first");
       return;
     }
 
     setLoading(true);
+    const loadingToast = toast.loading("🚀 Sending your tip...");
+    
     try {
       await sendTip(connection, publicKey, programId, sendTransaction);
-      toast.success("Tipped 0.01 SOL successfully! 🎉");
+      toast.dismiss(loadingToast);
+      toast.success("🎉 Tipped 0.01 SOL successfully! Thank you!");
       await fetchBalance();
     } catch (error) {
-      toast.error("Failed to send tip. Please try again.");
+      toast.dismiss(loadingToast);
+      toast.error("❌ Failed to send tip. Please try again.");
       console.error(error);
     } finally {
       setLoading(false);
@@ -80,17 +90,21 @@ const programId = new PublicKey(process.env.NEXT_PUBLIC_PROGRAM_ID as string);
 
   const handleWithdraw = async () => {
     if (!isOwner) {
-      toast.error("Only the owner can withdraw.");
+      toast.error("🚫 Only the owner can withdraw funds");
       return;
     }
 
     setWithdrawing(true);
+    const loadingToast = toast.loading("💸 Withdrawing funds...");
+    
     try {
       await withdrawAll(connection, publicKey!, programId, sendTransaction);
-      toast.success("Withdrawn all funds successfully! 💰");
+      toast.dismiss(loadingToast);
+      toast.success("💰 All funds withdrawn successfully!");
       await fetchBalance();
     } catch (error) {
-      toast.error("Failed to withdraw funds. Please try again.");
+      toast.dismiss(loadingToast);
+      toast.error("❌ Failed to withdraw funds. Please try again.");
       console.error(error);
     } finally {
       setWithdrawing(false);
@@ -102,13 +116,16 @@ const programId = new PublicKey(process.env.NEXT_PUBLIC_PROGRAM_ID as string);
     fetchBalance();
   }, [fetchBalance]);
 
-  // Reset states when wallet disconnects
+  // Handle wallet connection/disconnection
   useEffect(() => {
     if (!publicKey) {
       setBalance(null);
       setIsOwner(false);
       setLoading(false);
       setWithdrawing(false);
+    } else {
+      // Show success toast when wallet connects
+      toast.success("✅ Wallet connected successfully!");
     }
   }, [publicKey]);
 
@@ -125,7 +142,9 @@ const programId = new PublicKey(process.env.NEXT_PUBLIC_PROGRAM_ID as string);
           </div>
           
           <div className="mb-8">
-            <WalletMultiButton className="!bg-gradient-to-r !from-purple-500 !to-pink-500 !rounded-xl !font-semibold !text-white !border-none !h-12 !w-full !flex !items-center !justify-center !text-base hover:!from-purple-600 hover:!to-pink-600 !transition-all !duration-200" />
+            {mounted && (
+              <WalletMultiButton className="!bg-gradient-to-r !from-purple-500 !to-pink-500 !rounded-xl !font-semibold !text-white !border-none !h-12 !w-full !flex !items-center !justify-center !text-base hover:!from-purple-600 hover:!to-pink-600 !transition-all !duration-200" />
+            )}
           </div>
           
           {publicKey && (

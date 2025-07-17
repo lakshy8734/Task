@@ -49,6 +49,14 @@ npm install
 ```
 
 3. Set up environment variables:
+
+**Option 1: Use the sample file (recommended for quick setup)**
+```bash
+cp .env.sample .env.local
+```
+Then edit `.env.local` and replace `[ADD_YOUR_PRIVATE_KEY_ARRAY_HERE]` with your actual private key array.
+
+**Option 2: Create from scratch**
 Create a `.env.local` file with:
 ```
 NEXT_PUBLIC_SOLANA_NETWORK=devnet

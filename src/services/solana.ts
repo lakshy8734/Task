@@ -61,19 +61,18 @@ const createDummyWallet = () => {
 };
 
 // Get Anchor program
-const getProgram = (connection: Connection, wallet?: any) => {
+const getProgram = (connection: Connection, wallet?: unknown) => {
   const provider = new AnchorProvider(
     connection,
     wallet || createDummyWallet(),
     { commitment: "confirmed" }
   );
-  return new Program(idl as TipJarIdl, process.env.NEXT_PUBLIC_PROGRAM_ID!, provider);
+  return new Program(idl as unknown, process.env.NEXT_PUBLIC_PROGRAM_ID!, provider);
 };
 
 // Get tip jar balance
 export const getTipJarBalance = async (
-  connection: Connection,
-  programId: PublicKey
+  connection: Connection
 ): Promise<number> => {
   try {
     const tipJarPubkey = getTipJarAccount();
@@ -180,8 +179,7 @@ export const withdrawAll = async (
 export const initializeTipJar = async (
   connection: Connection,
   payer: Keypair,
-  ownerPublicKey: PublicKey,
-  programId: PublicKey
+  ownerPublicKey: PublicKey
 ): Promise<PublicKey> => {
   try {
     const tipJarKeypair = initializeTipJarAccount();

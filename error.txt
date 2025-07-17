@@ -1,0 +1,10 @@
+Failed to compile.
+./src/app/page.tsx
+50:7  Warning: The 'programId' object construction makes the dependencies of useCallback Hook (at line 66) change on every render. To fix this, wrap the initialization of 'programId' in its own useMemo() Hook.  react-hooks/exhaustive-deps
+./src/services/solana.ts
+64:54  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+76:3  Warning: 'programId' is defined but never used.  @typescript-eslint/no-unused-vars
+184:3  Warning: 'programId' is defined but never used.  @typescript-eslint/no-unused-vars
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/app/api-reference/config/eslint#disabling-rules
+Error: Command "npm run build" exited with 1
+Exiting build container

@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, useCallback, useEffect, useState } from "react";
+import { FC, useCallback, useEffect, useState, useMemo } from "react";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { LAMPORTS_PER_SOL, PublicKey, Keypair } from "@solana/web3.js";
@@ -47,11 +47,11 @@ const Home: FC = () => {
   };
   
   const ownerPublicKey = getOwnerPublicKey();
-const programId = new PublicKey(process.env.NEXT_PUBLIC_PROGRAM_ID as string);
+  const programId = useMemo(() => new PublicKey(process.env.NEXT_PUBLIC_PROGRAM_ID as string), []);
 
   const fetchBalance = useCallback(async () => {
     try {
-      const balance = await getTipJarBalance(connection, programId);
+      const balance = await getTipJarBalance(connection);
       setBalance(balance / LAMPORTS_PER_SOL);
       
       if (publicKey && ownerPublicKey) {
